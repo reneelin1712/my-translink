@@ -1,7 +1,6 @@
 ### setup
 
 npx create-react-app my-translink
-
 npm install --save react-map-gl
 
 <!-- index.html -->
@@ -9,4 +8,28 @@ npm install --save react-map-gl
 
 ### env
 
-npm install --save-dev dotenv
+npm install --save-dev cross-env
+save token
+
+### react-map-gl
+
+MapGL, Source,Layer, Popup
+geoJson
+
+### Chart.js
+
+npm install react-plotly.js plotly.js
+
+<!-- index.html -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+### graphQL
+
+npm install apollo-boost @apollo/react-hooks graphql
+
+### material-table
+
+yarn add material-table
+
+<!-- index.html -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
