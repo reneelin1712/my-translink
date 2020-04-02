@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Plot from "react-plotly.js";
 
 import { gql } from "apollo-boost";
@@ -30,15 +30,37 @@ const LineChart = () => {
       console.log(data);
       const tempX = data.stops_inbound_qty_2019.map(row => row.month);
       const unique = [...new Set(tempX)];
-      setXAxis(unique);
+      const forecast3month = [...unique, "2020-01", "2020-02"];
+      console.log(forecast3month);
+      setXAxis(forecast3month);
 
       const tempY = data.stops_inbound_qty_2019
         .filter(row => row.time == "Weekday (12:00am-8:29:59am)")
         .map(row => row.sum);
       console.log(tempY);
-      setYAxis(tempY);
+      const forecast3 = [...tempY, 18000, 19000];
+      setYAxis(forecast3);
     }
   });
+
+  useEffect(() => {
+    console.log(yAxis);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id: stop.stopID })
+    };
+
+    fetch("http://127.0.0.1:5000/api/forecast", requestOptions)
+      .then(res => res.json())
+      .then(data => console.log(data.forecast));
+
+    fetch("http://127.0.0.1:5000/api/time")
+      .then(res => res.json())
+      .then(data => console.log(data));
+  }, [stop.stopID]);
 
   return (
     <Plot

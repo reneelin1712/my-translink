@@ -28,7 +28,7 @@ npm install react-plotly.js plotly.js
 npm install apollo-boost @apollo/react-hooks graphql
 
 ### material-table
-
+yarn add @material-ui/core
 yarn add material-table
 
 <!-- index.html -->

@@ -129,7 +129,12 @@ const Map = () => {
           </div>
         </Popup>
       )}
-      <Source id="my-stop" type="geojson" data={temp}>
+
+      <Source
+        id="my-stop"
+        type="geojson"
+        data={"https://storage.googleapis.com/geojson_translink/temp.json"}
+      >
         <Layer
           id="point"
           type="circle"
