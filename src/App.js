@@ -5,7 +5,6 @@ import Station from "./pages/Station";
 import Overall from "./pages/Overall";
 import RouteTranslink from "./pages/RouteTranslink";
 import ThreeD from "./pages/ThreeD";
-import cat from "./assets/cat1.jpg";
 
 export default function App() {
   return (
@@ -44,7 +43,6 @@ function Home() {
   return (
     <div>
       <h2>Home</h2>
-      <img src={cat}></img>
     </div>
   );
 }
