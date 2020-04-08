@@ -48,6 +48,12 @@ const Nav = () => {
               Routes
             </Typography>
           </Link>
+
+          <Link to="/threed">
+            <Typography variant="h6" color="inherit">
+              3D Brisbane
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Nav from "./component/Nav";
 import Station from "./pages/Station";
 import Overall from "./pages/Overall";
+import RouteTranslink from "./pages/RouteTranslink";
+import ThreeD from "./pages/ThreeD";
+import cat from "./assets/cat1.jpg";
 
 export default function App() {
   return (
@@ -19,6 +22,15 @@ export default function App() {
           <Route path="/overall">
             <Overall />
           </Route>
+
+          <Route path="/route">
+            <RouteTranslink />
+          </Route>
+
+          <Route path="/threed">
+            <ThreeD />
+          </Route>
+
           <Route path="/">
             <Home />
           </Route>
@@ -29,7 +41,12 @@ export default function App() {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <div>
+      <h2>Home</h2>
+      <img src={cat}></img>
+    </div>
+  );
 }
 
 function About() {

@@ -19,7 +19,8 @@
     "react-map-gl": "^5.2.3",
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "three": "^0.115.0"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development react-scripts start",

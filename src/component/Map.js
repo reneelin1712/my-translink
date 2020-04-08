@@ -3,69 +3,24 @@ import MapGL, { Source, Layer, Popup } from "react-map-gl";
 
 import { StopContext } from "../context/StopProvider";
 
-const temp = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: { stopID: "600018", qty: 61.7602 },
-      geometry: { type: "Point", coordinates: [153.026069, -27.465841] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "11168", qty: 17.3429 },
-      geometry: { type: "Point", coordinates: [153.019148, -27.473482] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600014", qty: 17.3378 },
-      geometry: { type: "Point", coordinates: [153.033762, -27.456135] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "10802", qty: 13.7189 },
-      geometry: { type: "Point", coordinates: [153.019082, -27.473363] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600811", qty: 11.6792 },
-      geometry: { type: "Point", coordinates: [153.428396, -28.001641] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600801", qty: 10.5684 },
-      geometry: { type: "Point", coordinates: [153.431141, -28.035761] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600006", qty: 7.7354 },
-      geometry: { type: "Point", coordinates: [153.022995, -27.481832] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600823", qty: 7.2681 },
-      geometry: { type: "Point", coordinates: [153.413509, -27.967861] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "19064", qty: 7.1886 },
-      geometry: { type: "Point", coordinates: [153.022209, -27.481023] }
-    },
-    {
-      type: "Feature",
-      properties: { stopID: "600012", qty: 6.9238 },
-      geometry: { type: "Point", coordinates: [153.018521, -27.475067] }
-    }
-  ]
-};
+// const temp = {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[153.023547,-27.467949],[153.023961,-27.468532],[153.0192,-27.465942],[153.018344,-27.465855],[153.030604,-27.494044],[153.030193,-27.493932],[153.034195,-27.496767],[153.033846,-27.496841],[153.019082,-27.473363],[153.019148,-27.473482],[153.024777,-27.497983],[153.024484,-27.498096],[153.018263,-27.497734],[153.018077,-27.49805],[153.028213,-27.484505],[153.021835,-27.480721],[153.028393,-27.484413],[153.022209,-27.481023],[153.018234,-27.452195],[153.018135,-27.451851],[153.02533,-27.449792],[153.024912,-27.449862],[153.01511,-27.458866],[153.015067,-27.459122],[153.029133,-27.44699],[153.029207,-27.447393]]}}
+// const tempdata = {
+//   'type': 'Feature',
+//   'properties': {},
+//   'geometry': {
+//   'type': 'LineString',
+//   'coordinates':[[153.023547,-27.467949],[153.023961,-27.468532],[153.0192,-27.465942],[153.018344,-27.465855],[153.030604,-27.494044],[153.030193,-27.493932],[153.034195,-27.496767],[153.033846,-27.496841],[153.019082,-27.473363],[153.019148,-27.473482],[153.024777,-27.497983],[153.024484,-27.498096],[153.018263,-27.497734],[153.018077,-27.49805],[153.028213,-27.484505],[153.021835,-27.480721],[153.028393,-27.484413],[153.022209,-27.481023],[153.018234,-27.452195],[153.018135,-27.451851],[153.02533,-27.449792],[153.024912,-27.449862],[153.01511,-27.458866],[153.015067,-27.459122],[153.029133,-27.44699],[153.029207,-27.447393]]
+//   }
+//   }
+  
 
-const Map = () => {
+const Map = ({link,style_height,line}) => {
   const [stop, setStop] = useContext(StopContext);
   console.log(stop.lat);
 
   const [viewport, setViewport] = useState({
-    width: 400,
-    height: 400,
+    // width: 400,
+    // height: 400,
     latitude: stop.lat,
     longitude: stop.lon,
     zoom: 12
@@ -108,7 +63,7 @@ const Map = () => {
     <MapGL
       {...viewport}
       width="65vw"
-      height="55vh"
+      height={style_height}
       mapStyle="mapbox://styles/mapbox/dark-v9"
       onViewportChange={setViewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
@@ -130,10 +85,34 @@ const Map = () => {
         </Popup>
       )}
 
+     
+
+      <Source
+        id="route"
+        type="geojson"
+       // data={"https://storage.googleapis.com/geojson_translink/temp.json"}
+        data={line}
+      >
+        <Layer
+        id='lineLayer'
+        type='line'
+        source='my-data'
+          layout={{'line-join': 'round',
+          'line-cap': 'round'}}
+          paint={{
+            'line-color': '#51bbd6',
+'line-width': 1
+          }}
+      
+        />
+      </Source>
+
+
       <Source
         id="my-stop"
         type="geojson"
-        data={"https://storage.googleapis.com/geojson_translink/temp.json"}
+       // data={"https://storage.googleapis.com/geojson_translink/temp.json"}
+        data={link}
       >
         <Layer
           id="point"

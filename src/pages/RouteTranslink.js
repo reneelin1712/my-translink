@@ -1,11 +1,10 @@
 import React from "react";
 import Map from "../component/Map";
-import LineChart from "../component/LineChart";
 import Filter from "../component/Filter";
 
 import Grid from "@material-ui/core/Grid";
 
-const Station = () => {
+const RouteTranslink = () => {
   return (
     <div>
       <Grid container spacing={1}>
@@ -14,13 +13,13 @@ const Station = () => {
         </Grid>
 
         <Grid item xs={8}>
-          <Map link={"https://storage.googleapis.com/geojson_translink/temp.json"}
-          style_height={"55vh"}/>
-          <LineChart />
+          <Map link={"https://storage.googleapis.com/geojson_translink/stops_route66.json"}
+             style_height={"90vh"}
+             line={"https://storage.googleapis.com/geojson_translink/route_66_line.json"}/>
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Station;
+export default RouteTranslink;

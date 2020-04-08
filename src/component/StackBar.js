@@ -138,14 +138,6 @@ const StackBar = x => {
     }
   });
 
-
-
-
-  useEffect(() => {
-    console.log(y1);
-    console.log(x1);
-  }, [y1, x1]);
-
   return (
     <div>
       <h1>bar chart</h1>
