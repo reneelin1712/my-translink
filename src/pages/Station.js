@@ -14,8 +14,12 @@ const Station = () => {
         </Grid>
 
         <Grid item xs={8}>
-          <Map link={"https://storage.googleapis.com/geojson_translink/temp.json"}
-          style_height={"55vh"}/>
+          <Map
+            link={
+              "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/temp.json"
+            }
+            style_height={"55vh"}
+          />
           <LineChart />
         </Grid>
       </Grid>

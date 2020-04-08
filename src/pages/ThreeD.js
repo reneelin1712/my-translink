@@ -3,6 +3,8 @@ import * as THREE from "three";
 import mapboxgl from "mapbox-gl";
 import "./site.css";
 import woodtower from "../assets/Wood_Tower.glb";
+import car from "../assets/car.glb";
+import house from "../assets/house.glb";
 
 const irontower =
   "https://docs.mapbox.com/mapbox-gl-js/assets/34M_17/34M_17.gltf";
@@ -15,7 +17,7 @@ class ThreeD extends React.Component {
     this.state = {
       lng: 153.0137,
       lat: -27.4975,
-      zoom: 16.8
+      zoom: 15
     };
   }
 
@@ -38,7 +40,7 @@ class ThreeD extends React.Component {
     });
 
     // parameters to ensure the model is georeferenced correctly on the map
-    var modelOrigin = [153.0137, -27.4975];
+    var modelOrigin = [153.012, -27.494];
     var modelAltitude = 0;
     var modelRotate = [Math.PI / 2, 0, 0];
 
@@ -85,7 +87,7 @@ class ThreeD extends React.Component {
         var loader = new THREE.GLTFLoader();
         loader.load(
           //"https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
-          woodtower,
+          house,
           function(gltf) {
             this.scene.add(gltf.scene);
           }.bind(this)

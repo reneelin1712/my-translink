@@ -45,5 +45,6 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
-  }
+  },
+  "proxy": "https://storage.googleapis.com/geojson_translink/temp.json"
 }

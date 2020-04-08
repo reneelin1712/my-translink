@@ -13,9 +13,15 @@ const RouteTranslink = () => {
         </Grid>
 
         <Grid item xs={8}>
-          <Map link={"https://storage.googleapis.com/geojson_translink/stops_route66.json"}
-             style_height={"90vh"}
-             line={"https://storage.googleapis.com/geojson_translink/route_66_line.json"}/>
+          <Map
+            link={
+              "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/stops_route66.json"
+            }
+            style_height={"90vh"}
+            line={
+              "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/route_66_line.json"
+            }
+          />
         </Grid>
       </Grid>
     </div>
