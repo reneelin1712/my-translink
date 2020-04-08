@@ -3,8 +3,8 @@ import * as THREE from "three";
 import mapboxgl from "mapbox-gl";
 import "./site.css";
 import woodtower from "../assets/Wood_Tower.glb";
-import car from "../assets/car.glb";
-import house from "../assets/house.glb";
+// import car from "../assets/car.glb";
+// import house from "../assets/house.glb";
 
 const irontower =
   "https://docs.mapbox.com/mapbox-gl-js/assets/34M_17/34M_17.gltf";
@@ -87,7 +87,7 @@ class ThreeD extends React.Component {
         var loader = new THREE.GLTFLoader();
         loader.load(
           //"https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
-          house,
+          woodtower,
           function(gltf) {
             this.scene.add(gltf.scene);
           }.bind(this)
