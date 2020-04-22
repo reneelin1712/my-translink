@@ -6,18 +6,15 @@ import woodtower from "../assets/Wood_Tower.glb";
 // import car from "../assets/car.glb";
 // import house from "../assets/house.glb";
 
-const irontower =
-  "https://docs.mapbox.com/mapbox-gl-js/assets/34M_17/34M_17.gltf";
-
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
+mapboxgl.accessToken =
+  "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA";
 class ThreeD extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       lng: 153.0137,
       lat: -27.4975,
-      zoom: 15
+      zoom: 18
     };
   }
 
@@ -40,7 +37,7 @@ class ThreeD extends React.Component {
     });
 
     // parameters to ensure the model is georeferenced correctly on the map
-    var modelOrigin = [153.012, -27.494];
+    var modelOrigin = [153.0137, -27.4975];
     var modelAltitude = 0;
     var modelRotate = [Math.PI / 2, 0, 0];
 

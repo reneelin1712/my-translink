@@ -26,32 +26,63 @@ const Nav = () => {
           <IconButton
             edge="start"
             className={classes.menuButton}
-            color="inherit"
+            color="primary"
             aria-label="menu"
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/overall">
-            <Typography variant="h6" color="inherit">
+
+          <Link
+            to="/overall"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
               Overall
             </Typography>
           </Link>
 
-          <Link to="/station">
-            <Typography variant="h6" color="inherit">
+          <Link
+            to="/station"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
               Stations
             </Typography>
           </Link>
 
-          <Link to="/route">
-            <Typography variant="h6" color="inherit">
+          <Link
+            to="/route"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
               Routes
             </Typography>
           </Link>
 
-          <Link to="/threed">
-            <Typography variant="h6" color="inherit">
+          <Link
+            to="/origdes"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
+              Orin-Des
+            </Typography>
+          </Link>
+
+          <Link
+            to="/threed"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
               3D Brisbane
+            </Typography>
+          </Link>
+
+          <Link
+            to="/realtime"
+            style={{ textDecoration: "none", marginRight: "1%" }}
+          >
+            <Typography variant="h6" color="primary">
+              Realtime
             </Typography>
           </Link>
         </Toolbar>

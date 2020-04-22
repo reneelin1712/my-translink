@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import grey from "@material-ui/core/colors/grey";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -14,13 +15,16 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 const darkTheme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "dark",
+    primary: {
+      main: grey[50]
+    }
   }
 });
 
 const client = new ApolloClient({
-  // uri: "http://localhost:8080/v1/graphql"
-  uri: "http://34.70.125.163:8080/v1/graphql"
+  uri: "http://localhost:8080/v1/graphql"
+  //uri: "http://34.70.125.163:8080/v1/graphql"
 });
 
 ReactDOM.render(

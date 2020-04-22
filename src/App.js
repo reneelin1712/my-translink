@@ -5,6 +5,8 @@ import Station from "./pages/Station";
 import Overall from "./pages/Overall";
 import RouteTranslink from "./pages/RouteTranslink";
 import ThreeD from "./pages/ThreeD";
+import Realtime from "./pages/Realtime";
+import OrigDes from "./pages/OrigDes";
 
 export default function App() {
   return (
@@ -24,6 +26,14 @@ export default function App() {
 
           <Route path="/route">
             <RouteTranslink />
+          </Route>
+
+          <Route path="/origdes">
+            <OrigDes />
+          </Route>
+
+          <Route path="/realtime">
+            <Realtime />
           </Route>
 
           <Route path="/threed">

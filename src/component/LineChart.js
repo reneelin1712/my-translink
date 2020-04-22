@@ -23,6 +23,8 @@ const LineChart = () => {
 
   const [yAxis, setYAxis] = useState([]);
   const [xAxis, setXAxis] = useState([]);
+  // const [last, setLast] = useState([]);
+  const [forecast, setForecast] = useState([13317, 18000, 19000, 20000]);
 
   const { loading, error } = useQuery(STOP_INBOUND_QTY_2019, {
     variables: { stopID: stop.stopID },
@@ -30,7 +32,7 @@ const LineChart = () => {
       console.log(data);
       const tempX = data.stops_inbound_qty_2019.map(row => row.month);
       const unique = [...new Set(tempX)];
-      const forecast3month = [...unique, "2020-01", "2020-02"];
+      const forecast3month = [...unique, "2020-01", "2020-02", "2020-03"];
       console.log(forecast3month);
       setXAxis(forecast3month);
 
@@ -38,8 +40,9 @@ const LineChart = () => {
         .filter(row => row.time == "Weekday (12:00am-8:29:59am)")
         .map(row => row.sum);
       console.log(tempY);
-      const forecast3 = [...tempY, 18000, 19000];
+      const forecast3 = [...tempY];
       setYAxis(forecast3);
+      // setLast(tempY[-1]);
     }
   });
 
@@ -53,11 +56,23 @@ const LineChart = () => {
       body: JSON.stringify({ id: stop.stopID })
     };
 
-    fetch("http://127.0.0.1:5000/api/forecast", requestOptions)
+    fetch(
+      //"https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/forecast",
+      "http://127.0.0.1:5000/api/forecast",
+      requestOptions
+    )
       .then(res => res.json())
-      .then(data => console.log(data.forecast));
+      .then(data => {
+        console.log(data.forecast_central);
+        const concatForcast = [...yAxis, data.forecast_central];
+        console.log(concatForcast);
+        setForecast([15024, 17912, 14311, 16817, 17311, 19559]);
+      });
 
-    fetch("http://127.0.0.1:5000/api/time")
+    fetch(
+      //"https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/time"
+      "http://127.0.0.1:5000/api/time"
+    )
       .then(res => res.json())
       .then(data => console.log(data));
   }, [stop.stopID]);
@@ -72,6 +87,14 @@ const LineChart = () => {
           mode: "lines+markers",
           marker: { color: "red" },
           line: { color: "#red" }
+        },
+        {
+          x: ["2020-01", "2020-02", "2020-03"],
+          y: forecast,
+          type: "scatter",
+          mode: "lines+markers",
+          marker: { color: "red" },
+          line: { color: "rgb(55, 128, 191)" }
         }
       ]}
       layout={{
