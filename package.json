@@ -21,6 +21,7 @@
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "socket.io-client": "^2.3.0",
     "three": "^0.115.0"
   },
   "scripts": {
