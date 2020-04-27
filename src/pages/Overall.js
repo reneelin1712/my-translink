@@ -56,6 +56,7 @@ const marks = [
   }
 ];
 const Overall = () => {
+  const [selectYear, setSelectYear] = useState(2019);
   const [topRoutes, setTopRoutes] = useState([]);
   const [topStops, setTopStops] = useState([]);
   const { loading, error } = useQuery(GROUP_BY_ROUTE, {
@@ -84,6 +85,7 @@ const Overall = () => {
 
   const handleChange = (e, v) => {
     console.log(v);
+    setSelectYear(v);
   };
 
   return (
@@ -100,7 +102,7 @@ const Overall = () => {
         >
           <Slider
             style={{ width: 300 }}
-            defaultValue={40}
+            defaultValue={2019}
             // valueLabelFormat={valueLabelFormat}
             getAriaValueText={valuetext}
             aria-labelledby="discrete-slider-restrict"
@@ -114,10 +116,10 @@ const Overall = () => {
         </Grid>
 
         <Grid item xs={5}>
-          <BarChart />
+          <BarChart year={selectYear} />
         </Grid>
 
-        <Grid item xs={5}>
+        {/* <Grid item xs={5}>
           <DonutChart />
         </Grid>
 
@@ -126,7 +128,7 @@ const Overall = () => {
         </Grid>
         <Grid item xs={5}>
           {topStops.length > 0 ? <StackBarStops x={topStops} /> : null}
-        </Grid>
+        </Grid> */}
       </Grid>
     </div>
   );
