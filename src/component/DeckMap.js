@@ -3,7 +3,7 @@ import { Component } from "react";
 import DeckGL, { ArcLayer, HexagonLayer } from "deck.gl";
 import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 import MapGL from "react-map-gl";
-import { testfile } from "./test";
+// import { testfile } from "./test";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
