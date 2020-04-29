@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/react-hooks";
 import StackBar from "../component/StackBar";
 import StackBarStops from "../component/StackBarStops";
 import Slider from "@material-ui/core/Slider";
-import { makeStyles } from "@material-ui/core/styles";
+
 
 const GROUP_BY_ROUTE = gql`
   query groupByRoute2019 {

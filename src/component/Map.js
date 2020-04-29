@@ -12,6 +12,12 @@ import MapGL, {
 
 import { StopContext } from "../context/StopProvider";
 import Slider from "@material-ui/core/Slider";
+import Paper from "@material-ui/core/Paper";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
 
 // const temp = {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[153.023547,-27.467949],[153.023961,-27.468532],[153.0192,-27.465942],[153.018344,-27.465855],[153.030604,-27.494044],[153.030193,-27.493932],[153.034195,-27.496767],[153.033846,-27.496841],[153.019082,-27.473363],[153.019148,-27.473482],[153.024777,-27.497983],[153.024484,-27.498096],[153.018263,-27.497734],[153.018077,-27.49805],[153.028213,-27.484505],[153.021835,-27.480721],[153.028393,-27.484413],[153.022209,-27.481023],[153.018234,-27.452195],[153.018135,-27.451851],[153.02533,-27.449792],[153.024912,-27.449862],[153.01511,-27.458866],[153.015067,-27.459122],[153.029133,-27.44699],[153.029207,-27.447393]]}}
 // const tempdata = {
@@ -144,7 +150,9 @@ const temp = {
   ]
 };
 const Map = ({ link, style_height, line }) => {
-  const [qtyValue, setQtyValue] = useState([10, 37]);
+  const [qtyValue, setQtyValue] = useState([0, 30]);
+  const [yearValue, setYearValue] = React.useState("2019");
+  const [monthValue, setMonthValue] = React.useState(11);
   const [stop, setStop] = useContext(StopContext);
   console.log(stop.lat);
 
@@ -175,9 +183,19 @@ const Map = ({ link, style_height, line }) => {
       srcEvent: { offsetX, offsetY }
     } = e;
     console.log(features[0]);
-    if (features[0] && features[0].properties.qty == null) {
-      setShowPopup(false);
-    } else {
+    // if (features[0] && features[0].properties.qty == null) {
+    //   setShowPopup(false);
+    // } else {
+    //   setShowPopup(true);
+    //   setLat(features[0].geometry.coordinates[1]);
+    //   setLon(features[0].geometry.coordinates[0]);
+    //   setProperty(features[0].properties.qty);
+    //   // console.log(features[0].properties.qty);
+    //   // setStopID(features[0].properties.stopID);
+    //   console.log(property);
+    //   setStop({ ...stop, stopID: features[0].properties.stopID });
+    // }
+    if (features[0] && features[0].properties.qty) {
       setShowPopup(true);
       setLat(features[0].geometry.coordinates[1]);
       setLon(features[0].geometry.coordinates[0]);
@@ -186,34 +204,68 @@ const Map = ({ link, style_height, line }) => {
       // setStopID(features[0].properties.stopID);
       console.log(property);
       setStop({ ...stop, stopID: features[0].properties.stopID });
+    } else {
+      setShowPopup(false);
     }
   };
 
   const marks = [
     {
-      value: 2017,
-      label: "2017"
+      value: "1",
+      label: "1"
     },
     {
-      value: 2018,
-      label: "2018"
+      value: "2",
+      label: "2"
     },
     {
-      value: 2019,
-      label: "2019"
+      value: "3",
+      label: "3"
     },
     {
-      value: 2020,
-      label: "2020"
+      value: "4",
+      label: "4"
+    },
+    {
+      value: "5",
+      label: "5"
+    },
+    {
+      value: "6",
+      label: "6"
+    },
+    {
+      value: "7",
+      label: "7"
+    },
+    {
+      value: "8",
+      label: "8"
+    },
+    {
+      value: "9",
+      label: "9"
+    },
+    {
+      value: "10",
+      label: "10"
+    },
+    {
+      value: "11",
+      label: "11"
+    },
+    {
+      value: "12",
+      label: "12"
     }
   ];
 
-  function valuetext(value) {
-    return `${value}`;
-  }
-
   function valueqty(value) {
     return `${value}*10000`;
+  }
+
+  function valueMonth(value) {
+    return `${value}`;
   }
 
   const fullscreenControlStyle = {
@@ -237,16 +289,28 @@ const Map = ({ link, style_height, line }) => {
     padding: "10px"
   };
 
-  const monthFilter = {
+  const timeFliter = {
     position: "absolute",
-    bottom: 36,
-    left: 0,
-    padding: "10px"
+    bottom: 0,
+    // left: 0,
+    right: 0,
+    padding: "10px",
+    width: 350
   };
 
   const handleChangeQty = (event, newValue) => {
     setQtyValue(newValue);
     console.log(qtyValue[0]);
+  };
+
+  const handleChangeYear = event => {
+    setYearValue(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const handleChangeMonth = (e, v) => {
+    setMonthValue(v);
+    console.log(v);
   };
   return (
     <>
@@ -296,13 +360,27 @@ const Map = ({ link, style_height, line }) => {
         <Source
           id="my-stop"
           type="geojson"
-          // data={"https://storage.googleapis.com/geojson_translink/temp.json"}
-          data={temp}
+          // data={
+          //   "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/temp.json"
+          // }
+          // data={
+          //   "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/temp201912.json"
+          // }
+          data={
+            "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019cut.json"
+          }
+
+          //data={temp}
         >
           <Layer
             id="point"
             type="circle"
-            filter={["all", [">", "qty", qtyValue[0]], ["==", "month", 11]]}
+            filter={[
+              "all",
+              [">", "qty", qtyValue[0]],
+              ["<", "qty", qtyValue[1]],
+              ["==", "month", monthValue.toString()]
+            ]}
             paint={{
               "circle-radius": 10,
               "circle-color": [
@@ -329,31 +407,75 @@ const Map = ({ link, style_height, line }) => {
         <div style={scaleControlStyle}>
           <ScaleControl />
         </div>
+        <Paper style={timeFliter}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                {/* <FormLabel component="legend">labelPlacement</FormLabel> */}
+                <RadioGroup
+                  row
+                  aria-label="year"
+                  name="year"
+                  defaultValue="2019"
+                  value={yearValue}
+                  onChange={handleChangeYear}
+                >
+                  <FormControlLabel
+                    value="2017"
+                    control={<Radio color="primary" />}
+                    label="2017"
+                    labelPlacement="End"
+                  />
 
-        <Slider
-          style={{ width: 300 }}
-          defaultValue={2019}
-          // valueLabelFormat={valueLabelFormat}
-          getAriaValueText={valuetext}
-          aria-labelledby="discrete-slider-restrict"
-          step={1}
-          //valueLabelDisplay="auto"
-          marks={marks}
-          // onChange={handleChange}
-          min={2017}
-          max={2020}
-        />
+                  <FormControlLabel
+                    value="2018"
+                    control={<Radio color="primary" />}
+                    label="2018"
+                    labelPlacement="End"
+                  />
+
+                  <FormControlLabel
+                    value="2019"
+                    control={<Radio color="primary" />}
+                    label="2019"
+                    labelPlacement="End"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Slider
+                style={{ width: 300 }}
+                value={monthValue}
+                defaultValue={11}
+                // valueLabelFormat={valueLabelFormat}
+                getAriaValueText={valueMonth}
+                aria-labelledby="discrete-slider-restrict"
+                step={1}
+                marks={marks}
+                valueLabelDisplay="auto"
+                onChange={handleChangeMonth}
+                min={1}
+                max={12}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Slider
+                style={{ width: 300 }}
+                value={qtyValue}
+                onChange={handleChangeQty}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                getAriaValueText={valueqty}
+                min={0}
+                max={30}
+              />
+            </Grid>
+          </Grid>
+        </Paper>
       </MapGL>
-      <Slider
-        style={{ width: 300 }}
-        value={qtyValue}
-        onChange={handleChangeQty}
-        valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
-        getAriaValueText={valueqty}
-        min={0}
-        max={150}
-      />
     </>
   );
 };
