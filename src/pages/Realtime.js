@@ -60,6 +60,7 @@ class Realtime extends React.Component {
       pitch: 60,
       antialias: true // create the gl context with MSAA antialiasing, so custom layers are antialiased
     }));
+    map.addControl(new mapboxgl.NavigationControl());
 
     // var url = "https://wanderdrone.appspot.com/";
     map.on("load", function() {

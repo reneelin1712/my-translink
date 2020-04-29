@@ -18,143 +18,28 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Popper from "@material-ui/core/Popper";
+import Grow from "@material-ui/core/Grow";
 
-// const temp = {"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[153.023547,-27.467949],[153.023961,-27.468532],[153.0192,-27.465942],[153.018344,-27.465855],[153.030604,-27.494044],[153.030193,-27.493932],[153.034195,-27.496767],[153.033846,-27.496841],[153.019082,-27.473363],[153.019148,-27.473482],[153.024777,-27.497983],[153.024484,-27.498096],[153.018263,-27.497734],[153.018077,-27.49805],[153.028213,-27.484505],[153.021835,-27.480721],[153.028393,-27.484413],[153.022209,-27.481023],[153.018234,-27.452195],[153.018135,-27.451851],[153.02533,-27.449792],[153.024912,-27.449862],[153.01511,-27.458866],[153.015067,-27.459122],[153.029133,-27.44699],[153.029207,-27.447393]]}}
-// const tempdata = {
-//   'type': 'Feature',
-//   'properties': {},
-//   'geometry': {
-//   'type': 'LineString',
-//   'coordinates':[[153.023547,-27.467949],[153.023961,-27.468532],[153.0192,-27.465942],[153.018344,-27.465855],[153.030604,-27.494044],[153.030193,-27.493932],[153.034195,-27.496767],[153.033846,-27.496841],[153.019082,-27.473363],[153.019148,-27.473482],[153.024777,-27.497983],[153.024484,-27.498096],[153.018263,-27.497734],[153.018077,-27.49805],[153.028213,-27.484505],[153.021835,-27.480721],[153.028393,-27.484413],[153.022209,-27.481023],[153.018234,-27.452195],[153.018135,-27.451851],[153.02533,-27.449792],[153.024912,-27.449862],[153.01511,-27.458866],[153.015067,-27.459122],[153.029133,-27.44699],[153.029207,-27.447393]]
-//   }
-//   }
 const REACT_APP_MAPBOX_TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA";
 
-const temp = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600018",
-        qty: 61.7602,
-        month: 11
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.026069, -27.465841]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "11168",
-        qty: 17.3429
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.019148, -27.473482]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600014",
-        qty: 17.3378
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.033762, -27.456135]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "10802",
-        qty: 13.7189
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.019082, -27.473363]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600811",
-        qty: 11.6792
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.428396, -28.001641]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600801",
-        qty: 10.5684,
-        month: 11
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.431141, -28.035761]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600006",
-        qty: 7.7354
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.022995, -27.481832]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600823",
-        qty: 7.2681
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.413509, -27.967861]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "19064",
-        qty: 7.1886
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.022209, -27.481023]
-      }
-    },
-    {
-      type: "Feature",
-      properties: {
-        stopID: "600012",
-        qty: 6.9238,
-        month: 11
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [153.018521, -27.475067]
-      }
-    }
-  ]
+const links = {
+  2017: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2017cut.json",
+  2018: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2018cut.json",
+  2019: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019cut.json"
 };
 const Map = ({ link, style_height, line }) => {
   const [qtyValue, setQtyValue] = useState([0, 30]);
   const [yearValue, setYearValue] = React.useState("2019");
   const [monthValue, setMonthValue] = React.useState(11);
   const [stop, setStop] = useContext(StopContext);
+  const [jsonLink, setJsonLink] = useState(links["2019"]);
   console.log(stop.lat);
+
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
 
   const [viewport, setViewport] = useState({
     // width: 400,
@@ -183,18 +68,6 @@ const Map = ({ link, style_height, line }) => {
       srcEvent: { offsetX, offsetY }
     } = e;
     console.log(features[0]);
-    // if (features[0] && features[0].properties.qty == null) {
-    //   setShowPopup(false);
-    // } else {
-    //   setShowPopup(true);
-    //   setLat(features[0].geometry.coordinates[1]);
-    //   setLon(features[0].geometry.coordinates[0]);
-    //   setProperty(features[0].properties.qty);
-    //   // console.log(features[0].properties.qty);
-    //   // setStopID(features[0].properties.stopID);
-    //   console.log(property);
-    //   setStop({ ...stop, stopID: features[0].properties.stopID });
-    // }
     if (features[0] && features[0].properties.qty) {
       setShowPopup(true);
       setLat(features[0].geometry.coordinates[1]);
@@ -291,11 +164,19 @@ const Map = ({ link, style_height, line }) => {
 
   const timeFliter = {
     position: "absolute",
-    bottom: 0,
+    // bottom: 0,
     // left: 0,
     right: 0,
-    padding: "10px",
+    padding: "15px",
     width: 350
+  };
+
+  const toggleButton = {
+    position: "absolute",
+    top: 0,
+    // left: 0,
+    right: 0,
+    backgroundColor: "orange"
   };
 
   const handleChangeQty = (event, newValue) => {
@@ -306,12 +187,28 @@ const Map = ({ link, style_height, line }) => {
   const handleChangeYear = event => {
     setYearValue(event.target.value);
     console.log(event.target.value);
+    console.log();
+    setJsonLink(links[event.target.value.toString()]);
   };
 
   const handleChangeMonth = (e, v) => {
     setMonthValue(v);
     console.log(v);
   };
+
+  const handleToggle = () => {
+    setOpen(prevOpen => !prevOpen);
+  };
+
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
   return (
     <>
       <MapGL
@@ -340,24 +237,6 @@ const Map = ({ link, style_height, line }) => {
         )}
 
         <Source
-          id="route"
-          type="geojson"
-          // data={"https://storage.googleapis.com/geojson_translink/temp.json"}
-          data={line}
-        >
-          <Layer
-            id="lineLayer"
-            type="line"
-            source="my-data"
-            layout={{ "line-join": "round", "line-cap": "round" }}
-            paint={{
-              "line-color": "#51bbd6",
-              "line-width": 1
-            }}
-          />
-        </Source>
-
-        <Source
           id="my-stop"
           type="geojson"
           // data={
@@ -366,9 +245,7 @@ const Map = ({ link, style_height, line }) => {
           // data={
           //   "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/temp201912.json"
           // }
-          data={
-            "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019cut.json"
-          }
+          data={jsonLink}
 
           //data={temp}
         >
@@ -402,79 +279,107 @@ const Map = ({ link, style_height, line }) => {
           <FullscreenControl />
         </div>
         <div style={navStyle}>
-          <NavigationControl />
+          <NavigationControl onViewportChange={setViewport} />
         </div>
         <div style={scaleControlStyle}>
           <ScaleControl />
         </div>
-        <Paper style={timeFliter}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                {/* <FormLabel component="legend">labelPlacement</FormLabel> */}
-                <RadioGroup
-                  row
-                  aria-label="year"
-                  name="year"
-                  defaultValue="2019"
-                  value={yearValue}
-                  onChange={handleChangeYear}
-                >
-                  <FormControlLabel
-                    value="2017"
-                    control={<Radio color="primary" />}
-                    label="2017"
-                    labelPlacement="End"
-                  />
+        <div style={toggleButton}>
+          <Button
+            ref={anchorRef}
+            aria-controls={open ? "menu-list-grow" : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+          >
+            Filter
+          </Button>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom"
+                }}
+              >
+                <Paper style={timeFliter}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <FormControl component="fieldset">
+                        {/* <FormLabel component="legend">labelPlacement</FormLabel> */}
+                        <RadioGroup
+                          row
+                          aria-label="year"
+                          name="year"
+                          defaultValue="2019"
+                          value={yearValue}
+                          onChange={handleChangeYear}
+                        >
+                          <FormControlLabel
+                            value="2017"
+                            control={<Radio color="primary" />}
+                            label="2017"
+                            labelPlacement="End"
+                          />
 
-                  <FormControlLabel
-                    value="2018"
-                    control={<Radio color="primary" />}
-                    label="2018"
-                    labelPlacement="End"
-                  />
+                          <FormControlLabel
+                            value="2018"
+                            control={<Radio color="primary" />}
+                            label="2018"
+                            labelPlacement="End"
+                          />
 
-                  <FormControlLabel
-                    value="2019"
-                    control={<Radio color="primary" />}
-                    label="2019"
-                    labelPlacement="End"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
+                          <FormControlLabel
+                            value="2019"
+                            control={<Radio color="primary" />}
+                            label="2019"
+                            labelPlacement="End"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
 
-            <Grid item xs={12}>
-              <Slider
-                style={{ width: 300 }}
-                value={monthValue}
-                defaultValue={11}
-                // valueLabelFormat={valueLabelFormat}
-                getAriaValueText={valueMonth}
-                aria-labelledby="discrete-slider-restrict"
-                step={1}
-                marks={marks}
-                valueLabelDisplay="auto"
-                onChange={handleChangeMonth}
-                min={1}
-                max={12}
-              />
-            </Grid>
+                    <Grid item xs={12}>
+                      <Slider
+                        style={{ width: 300 }}
+                        value={monthValue}
+                        defaultValue={11}
+                        // valueLabelFormat={valueLabelFormat}
+                        getAriaValueText={valueMonth}
+                        aria-labelledby="discrete-slider-restrict"
+                        step={1}
+                        marks={marks}
+                        valueLabelDisplay="auto"
+                        onChange={handleChangeMonth}
+                        min={1}
+                        max={12}
+                      />
+                    </Grid>
 
-            <Grid item xs={12}>
-              <Slider
-                style={{ width: 300 }}
-                value={qtyValue}
-                onChange={handleChangeQty}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                getAriaValueText={valueqty}
-                min={0}
-                max={30}
-              />
-            </Grid>
-          </Grid>
-        </Paper>
+                    <Grid item xs={12}>
+                      <Slider
+                        style={{ width: 300 }}
+                        value={qtyValue}
+                        onChange={handleChangeQty}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                        getAriaValueText={valueqty}
+                        min={0}
+                        max={30}
+                      />
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
       </MapGL>
     </>
   );

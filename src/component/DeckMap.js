@@ -2,8 +2,14 @@ import * as React from "react";
 import { Component } from "react";
 import DeckGL, { ArcLayer, HexagonLayer } from "deck.gl";
 import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
-import MapGL from "react-map-gl";
-// import { testfile } from "./test";
+import MapGL, {
+  NavigationControl,
+  FullscreenControl,
+  ScaleControl
+} from "react-map-gl";
+import { testfile } from "./test";
+import { json201912 } from "./deckData";
+import { try11 } from "./test";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
@@ -11,6 +17,31 @@ const ambientLight = new AmbientLight({
   color: [255, 255, 255],
   intensity: 1.0
 });
+
+const sourceData = json201912;
+// "https://storage.googleapis.com/geojson_translink/geoJson201912.json";
+
+const fullscreenControlStyle = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  padding: "10px"
+};
+
+const navStyle = {
+  position: "absolute",
+  top: 36,
+  left: 0,
+  padding: "10px",
+  zIndex: 9999
+};
+
+const scaleControlStyle = {
+  position: "absolute",
+  bottom: 36,
+  left: 0,
+  padding: "10px"
+};
 
 const pointLight1 = new PointLight({
   color: [255, 255, 255],
@@ -50,11 +81,11 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        longitude: -73,
-        latitude: 40,
-        zoom: 11,
+        longitude: 152.706069,
+        latitude: -27.565841,
+        zoom: 8,
         bearing: 0,
-        pitch: 30
+        pitch: 40.5
       }
     };
   }
@@ -76,6 +107,19 @@ export default class App extends Component {
         mapboxApiAccessToken={TOKEN}
         mapStyle="mapbox://styles/mapbox/dark-v9"
       >
+        <div style={fullscreenControlStyle}>
+          <FullscreenControl />
+        </div>
+        <div style={navStyle}>
+          <NavigationControl
+          // showCompass={true}
+          // onViewportChange={viewport => this.setState({ viewport })}
+          />
+        </div>
+        <div style={scaleControlStyle}>
+          <ScaleControl />
+        </div>
+
         <DeckGL
           controller={true}
           viewState={viewport}
@@ -84,17 +128,38 @@ export default class App extends Component {
           material={material}
           layers={[
             new HexagonLayer({
-              data: testfile,
-              getPosition: d => [d.longitude, d.latitude],
+              data:
+                //try11,
+                sourceData,
+              getPosition: d => [d.lon, d.lat],
               // strokeWidth: 4,
-              getElevationWeight: d => d.n_killed * 2 + d.n_injured,
+              //getElevationWeight: d => d.n_killed * 2 + d.n_injured,
+              getElevationWeight: d => d.qty,
               elevationScale: 50,
-              radius: 1609,
+              radius: 100,
               extruded: true,
-              onHover: this.props.onHover,
+              onHover: ({ object, x, y }) => {
+                const el = document.getElementById("tooltip");
+                if (object) {
+                  const { points } = object;
+                  // console.log(points[0]);
+                  el.innerHTML = `<div><h5>Name ${
+                    points[0].stopName
+                  }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
+                  el.style.display = "block";
+                  el.style.opacity = 0.9;
+                  el.style.left = x + "px";
+                  el.style.top = y + "px";
+                } else {
+                  el.style.opacity = 0.0;
+                }
+
+                // console.log(object);
+              },
               pickable: true,
               opacity: 0.6,
               coverage: 0.88
+              // colorRange   update this once know light
               // lowerPercentile: 50
               // getSourceColor: x => [0, 0, 255],
               // getTargetColor: x => [0, 255, 0]
