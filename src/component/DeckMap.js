@@ -139,19 +139,19 @@ export default class App extends Component {
               radius: 100,
               extruded: true,
               onHover: ({ object, x, y }) => {
-                const el = document.getElementById("tooltip");
+                // const el = document.getElementById("tooltip");
                 if (object) {
                   const { points } = object;
                   // console.log(points[0]);
-                  el.innerHTML = `<div><h5>Name ${
-                    points[0].stopName
-                  }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
-                  el.style.display = "block";
-                  el.style.opacity = 0.9;
-                  el.style.left = x + "px";
-                  el.style.top = y + "px";
-                } else {
-                  el.style.opacity = 0.0;
+                  //   el.innerHTML = `<div><h5>Name ${
+                  //     points[0].stopName
+                  //   }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
+                  //   el.style.display = "block";
+                  //   el.style.opacity = 0.9;
+                  //   el.style.left = x + "px";
+                  //   el.style.top = y + "px";
+                  // } else {
+                  //   el.style.opacity = 0.0;
                 }
 
                 // console.log(object);

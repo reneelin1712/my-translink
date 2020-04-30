@@ -2,6 +2,7 @@ import * as React from "react";
 import { Component } from "react";
 import DeckGL, { ArcLayer } from "deck.gl";
 import MapGL from "react-map-gl";
+import {trips,temp} from "./tripData"
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
@@ -11,9 +12,9 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        longitude: -122.45,
-        latitude: 37.78,
-        zoom: 11,
+        longitude: 153.019079,
+        latitude: -27.467834,
+        zoom: 9,
         bearing: 0,
         pitch: 30
       }
@@ -41,19 +42,11 @@ export default class App extends Component {
           viewState={viewport}
           layers={[
             new ArcLayer({
-              data: [
-                {
-                  source: [-122.41669, 37.7853],
-                  target: [-122.45669, 37.781]
-                },
-                {
-                  source: [-122.41669, 37.7853],
-                  target: [-122.47, 37.781]
-                }
-              ],
+              data: temp,
               strokeWidth: 4,
-              getSourcePosition: d => d.source,
-              getTargetPosition: d => d.target,
+              getWidth:d=>d.qty/100,
+              getSourcePosition: d => d.org,
+              getTargetPosition: d => d.des,
               getSourceColor: x => [0, 0, 255],
               getTargetColor: x => [0, 255, 0]
             })
