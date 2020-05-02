@@ -13,7 +13,7 @@ const Station = () => {
           <Filter />
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={8} alignItems="stretch">
           <Map
             link={
               "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/temp.json"

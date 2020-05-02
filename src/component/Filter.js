@@ -37,12 +37,17 @@ const Filter = () => {
   return (
     <div>
       <MaterialTable
+        minRows={10}
         columns={[
-          { title: "Stop ID", field: "stop_id" },
+          {
+            width: 110,
+            title: "Stop ID",
+            field: "stop_id"
+          },
           { title: "Stop Name", field: "stop_name" }
         ]}
         data={stopNames}
-        title="Demo Title"
+        title="Stations"
         detailPanel={rowData => {}}
         onRowClick={(event, rowData) => {
           console.log(rowData.stop_lat);
@@ -51,6 +56,12 @@ const Filter = () => {
             lat: rowData.stop_lat,
             lon: rowData.stop_lon
           });
+        }}
+        options={{
+          maxBodyHeight: "70vh",
+          minBodyHeight: "70vh",
+          pageSize: 6,
+          pageSizeOptions: [6, 10, 20, 25, 50, 100]
         }}
       />
     </div>

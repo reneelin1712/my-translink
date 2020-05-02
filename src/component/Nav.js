@@ -4,8 +4,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Icon from "@material-ui/core/Icon";
 import { Link } from "react-router-dom";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,11 +15,24 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2)
+  },
+  tab: {
+    minWidth: 70,
+    width: 120
   }
 }));
 
 const Nav = () => {
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const setHome = () => {
+    setValue(0);
+  };
 
   return (
     <div className={classes.root}>
@@ -27,64 +42,65 @@ const Nav = () => {
             edge="start"
             className={classes.menuButton}
             color="primary"
-            aria-label="menu"
+            aria-label="logo"
+            onClick={setHome}
           >
-            <MenuIcon />
+            <Icon>train</Icon>
           </IconButton>
-
-          <Link
-            to="/overall"
-            style={{ textDecoration: "none", marginRight: "1%" }}
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="disabled tabs example"
           >
-            <Typography variant="h6" color="primary">
-              Overall
-            </Typography>
-          </Link>
+            <Tab
+              label="Stations"
+              className={classes.tab}
+              component={Link}
+              to="/station"
+            ></Tab>
+            <Tab
+              label="3D hexagon"
+              className={classes.tab}
+              component={Link}
+              to="/route"
+            ></Tab>
+            <Tab
+              label="origin-des"
+              className={classes.tab}
+              component={Link}
+              to="/origdes"
+            >
+              {/* <Link
+                to="/origdes"
+                style={{ textDecoration: "none", marginRight: "1%" }}
+              >
+                <Typography variant="h6" color="primary">
+                  Orin-Des
+                </Typography>
+              </Link> */}
+            </Tab>
 
-          <Link
-            to="/station"
-            style={{ textDecoration: "none", marginRight: "1%" }}
-          >
-            <Typography variant="h6" color="primary">
-              Stations
-            </Typography>
-          </Link>
-
-          <Link
-            to="/route"
-            style={{ textDecoration: "none", marginRight: "1%" }}
-          >
-            <Typography variant="h6" color="primary">
-              Routes
-            </Typography>
-          </Link>
-
-          <Link
-            to="/origdes"
-            style={{ textDecoration: "none", marginRight: "1%" }}
-          >
-            <Typography variant="h6" color="primary">
-              Orin-Des
-            </Typography>
-          </Link>
-
-          <Link
-            to="/threed"
-            style={{ textDecoration: "none", marginRight: "1%" }}
-          >
-            <Typography variant="h6" color="primary">
-              3D Brisbane
-            </Typography>
-          </Link>
-
-          <Link
-            to="/realtime"
-            style={{ textDecoration: "none", marginRight: "1%" }}
-          >
-            <Typography variant="h6" color="primary">
-              Realtime
-            </Typography>
-          </Link>
+            <Tab
+              label="real-time"
+              className={classes.tab}
+              component={Link}
+              to="/realtime"
+            ></Tab>
+            <Tab
+              label="overall"
+              className={classes.tab}
+              component={Link}
+              to="/overall"
+            ></Tab>
+            <Tab
+              label="3D"
+              className={classes.tab}
+              component={Link}
+              to="/threed"
+            ></Tab>
+          </Tabs>
         </Toolbar>
       </AppBar>
     </div>

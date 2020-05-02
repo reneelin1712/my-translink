@@ -6,6 +6,7 @@ import MapGL, {
   NavigationControl,
   FullscreenControl,
   ScaleControl
+  // FlyToInterpolator
 } from "react-map-gl";
 
 // import { ScaleControl } from "react-mapbox-gl";
@@ -21,6 +22,8 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
+import ArrowDropDownCircle from "@material-ui/icons/ArrowDropDownCircle";
+import { orange } from "@material-ui/core/colors";
 
 const REACT_APP_MAPBOX_TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA";
@@ -47,6 +50,8 @@ const Map = ({ link, style_height, line }) => {
     latitude: stop.lat,
     longitude: stop.lon,
     zoom: 12
+    // transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
+    // transitionDuration: "auto"
   });
 
   useEffect(() => {
@@ -173,10 +178,10 @@ const Map = ({ link, style_height, line }) => {
 
   const toggleButton = {
     position: "absolute",
-    top: 0,
+    top: 10,
     // left: 0,
-    right: 0,
-    backgroundColor: "orange"
+    right: 10
+    // backgroundColor: "orange"
   };
 
   const handleChangeQty = (event, newValue) => {
@@ -263,11 +268,13 @@ const Map = ({ link, style_height, line }) => {
               "circle-color": [
                 "step",
                 ["get", "qty"],
-                "#51bbd6",
+                // "#51bbd6",
+                "#81d4fa",
                 10,
-                "#f1f075",
+                // "#f1f075",
+                "#29b6f6",
                 61,
-                "#f28cb1"
+                "#039be5"
               ],
               "circle-radius": ["step", ["get", "qty"], 6, 7, 13, 20, 25],
               "circle-stroke-width": 1,
@@ -285,14 +292,16 @@ const Map = ({ link, style_height, line }) => {
           <ScaleControl />
         </div>
         <div style={toggleButton}>
-          <Button
+          <ArrowDropDownCircle
             ref={anchorRef}
             aria-controls={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
             onClick={handleToggle}
+            fontSize="large"
+            style={{ color: orange[500], fontSize: 45 }}
           >
-            Filter
-          </Button>
+            {/* Filter */}
+          </ArrowDropDownCircle>
           <Popper
             open={open}
             anchorEl={anchorRef.current}

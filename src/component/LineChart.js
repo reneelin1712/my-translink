@@ -85,37 +85,51 @@ const LineChart = () => {
           y: yAxis,
           type: "scatter",
           mode: "lines+markers",
-          marker: { color: "red" },
-          line: { color: "#red" }
+          marker: { color: "orange" },
+          line: { color: "orange", width: 1 },
+          name: "history"
         },
         {
           x: ["2020-01", "2020-02", "2020-03"],
           y: forecast,
           type: "scatter",
           mode: "lines+markers",
-          marker: { color: "red" },
-          line: { color: "rgb(55, 128, 191)" }
+          marker: { color: "#039be5" },
+          line: { color: "#039be5", dash: "dot" },
+          name: "prediction"
         }
       ]}
       layout={{
         width: 820,
         height: 200,
-        //  title: "Traffic Inbound Flow"
+        legend: {
+          font: {
+            color: "white"
+          }
+        },
         margin: {
-          l: 30,
+          l: 50,
           r: 5,
           b: 30,
           t: 10,
-          pad: 2
+          pad: 5
         },
-        plot_bgcolor: "#FFF3",
-        paper_bgcolor: "#FFF3",
+        plot_bgcolor: "#424242",
+        paper_bgcolor: "#343333",
         xaxis: {
-          showgrid: false
+          showgrid: false,
+          tickfont: {
+            color: "white"
+          }
         },
         yaxis: {
+          title: "Station Inbound Flow",
+          color: "white",
           showgrid: true,
-          gridcolor: "#636363"
+          gridcolor: "#515151",
+          tickfont: {
+            color: "white"
+          }
         }
       }}
     />
