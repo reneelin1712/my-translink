@@ -6,6 +6,24 @@ import woodtower from "../assets/Wood_Tower.glb";
 // import car from "../assets/car.glb";
 // import house from "../assets/house.glb";
 
+const mapStyle = {
+  position: "absolute",
+  top: 50,
+  right: 0,
+  left: 0,
+  bottom: 0
+};
+
+const infoStyle = {
+  position: "absolute",
+  top: 55,
+  backgroundColor: "#000000",
+  // right: 0,
+  // left: 0,
+  // bottom: 0,
+  zIndex: 999
+};
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA";
 class ThreeD extends React.Component {
@@ -147,13 +165,13 @@ class ThreeD extends React.Component {
   render() {
     return (
       <div>
-        <div className="sidebarStyle">
-          <div>
+        <div>
+          <div style={infoStyle}>
             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
             {this.state.zoom}
           </div>
         </div>
-        <div ref={el => (this.mapContainer = el)} className="mapContainer" />
+        <div ref={el => (this.mapContainer = el)} style={mapStyle} />
       </div>
     );
   }

@@ -1,15 +1,18 @@
-import * as React from "react";
-import { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import DeckGL, { ArcLayer, HexagonLayer } from "deck.gl";
 import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 import MapGL, {
   NavigationControl,
   FullscreenControl,
-  ScaleControl
+  ScaleControl,
+  Marker
 } from "react-map-gl";
 import { testfile } from "./test";
 import { json201912 } from "./deckData";
 import { try11 } from "./test";
+import Icon from "@material-ui/core/Icon";
+import { orange } from "@material-ui/core/colors";
+import { StopContext } from "../context/StopProvider";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
@@ -76,97 +79,103 @@ const colorRange = [
   [209, 55, 78]
 ];
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: {
-        longitude: 152.706069,
-        latitude: -27.565841,
-        zoom: 8,
-        bearing: 0,
-        pitch: 40.5
-      }
-    };
-  }
+const DeckMap = () => {
+  const [stop, setStop] = useContext(StopContext);
+  const [viewport, setViewport] = useState({
+    longitude: 152.706069,
+    latitude: -27.565841,
+    zoom: 8,
+    bearing: 0,
+    pitch: 40.5
+  });
 
-  _onViewportChange = viewport => {
-    this.setState({ viewport });
+  const _onViewportChange = viewport => {
+    setViewport(viewport);
   };
 
-  render() {
-    const { viewport } = this.state;
-
-    return (
-      <MapGL
-        {...viewport}
-        width="100%"
-        height="100%"
-        maxPitch={85}
-        onViewportChange={this._onViewportChange}
-        mapboxApiAccessToken={TOKEN}
-        mapStyle="mapbox://styles/mapbox/dark-v9"
-      >
-        <div style={fullscreenControlStyle}>
-          <FullscreenControl />
-        </div>
-        <div style={navStyle}>
-          <NavigationControl
-          // showCompass={true}
-          // onViewportChange={viewport => this.setState({ viewport })}
-          />
-        </div>
-        <div style={scaleControlStyle}>
-          <ScaleControl />
-        </div>
-
-        <DeckGL
-          controller={true}
-          viewState={viewport}
-          effects={[lightingEffect]}
-          colorRange={colorRange}
-          material={material}
-          layers={[
-            new HexagonLayer({
-              data:
-                //try11,
-                sourceData,
-              getPosition: d => [d.lon, d.lat],
-              // strokeWidth: 4,
-              //getElevationWeight: d => d.n_killed * 2 + d.n_injured,
-              getElevationWeight: d => d.qty,
-              elevationScale: 50,
-              radius: 100,
-              extruded: true,
-              onHover: ({ object, x, y }) => {
-                // const el = document.getElementById("tooltip");
-                if (object) {
-                  const { points } = object;
-                  // console.log(points[0]);
-                  //   el.innerHTML = `<div><h5>Name ${
-                  //     points[0].stopName
-                  //   }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
-                  //   el.style.display = "block";
-                  //   el.style.opacity = 0.9;
-                  //   el.style.left = x + "px";
-                  //   el.style.top = y + "px";
-                  // } else {
-                  //   el.style.opacity = 0.0;
-                }
-
-                // console.log(object);
-              },
-              pickable: true,
-              opacity: 0.6,
-              coverage: 0.88
-              // colorRange   update this once know light
-              // lowerPercentile: 50
-              // getSourceColor: x => [0, 0, 255],
-              // getTargetColor: x => [0, 255, 0]
-            })
-          ]}
+  return (
+    <MapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      maxPitch={85}
+      onViewportChange={_onViewportChange}
+      mapboxApiAccessToken={TOKEN}
+      mapStyle="mapbox://styles/mapbox/dark-v9"
+    >
+      <div style={fullscreenControlStyle}>
+        <FullscreenControl />
+      </div>
+      <div style={navStyle}>
+        <NavigationControl
+        // showCompass={true}
+        // onViewportChange={viewport => this.setState({ viewport })}
         />
-      </MapGL>
-    );
-  }
-}
+      </div>
+      <div style={scaleControlStyle}>
+        <ScaleControl />
+      </div>
+      <Marker
+        latitude={stop.lat}
+        longitude={stop.lon}
+        offsetLeft={-20}
+        offsetTop={-10}
+      >
+        {/* <div style={{ color: "orange", fontWeight: "bold" }}>
+            You are here
+          </div> */}
+
+        <Icon style={{ color: orange[500] }}>train</Icon>
+      </Marker>
+
+      <DeckGL
+        controller={true}
+        viewState={viewport}
+        effects={[lightingEffect]}
+        colorRange={colorRange}
+        material={material}
+        layers={[
+          new HexagonLayer({
+            data:
+              //try11,
+              sourceData,
+            getPosition: d => [d.lon, d.lat],
+            // strokeWidth: 4,
+            //getElevationWeight: d => d.n_killed * 2 + d.n_injured,
+            getElevationWeight: d => d.qty,
+            elevationScale: 50,
+            radius: 100,
+            extruded: true,
+            onHover: ({ object, x, y }) => {
+              // const el = document.getElementById("tooltip");
+              if (object) {
+                const { points } = object;
+                // console.log(points[0]);
+                //   el.innerHTML = `<div><h5>Name ${
+                //     points[0].stopName
+                //   }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
+                //   el.style.display = "block";
+                //   el.style.opacity = 0.9;
+                //   el.style.left = x + "px";
+                //   el.style.top = y + "px";
+                // } else {
+                //   el.style.opacity = 0.0;
+              }
+
+              // console.log(object);
+            },
+            pickable: true,
+            opacity: 0.6,
+            coverage: 0.88
+            // colorRange   update this once know light
+            // lowerPercentile: 50
+            // getSourceColor: x => [0, 0, 255],
+            // getTargetColor: x => [0, 255, 0]
+          })
+        ]}
+      />
+    </MapGL>
+  );
+};
+
+export default DeckMap;

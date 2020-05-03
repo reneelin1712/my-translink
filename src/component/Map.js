@@ -5,9 +5,11 @@ import MapGL, {
   Popup,
   NavigationControl,
   FullscreenControl,
-  ScaleControl
+  ScaleControl,
+  Marker
   // FlyToInterpolator
 } from "react-map-gl";
+import Icon from "@material-ui/core/Icon";
 
 // import { ScaleControl } from "react-mapbox-gl";
 
@@ -56,6 +58,8 @@ const Map = ({ link, style_height, line }) => {
 
   useEffect(() => {
     setViewport({ ...viewport, latitude: stop.lat, longitude: stop.lon });
+    setLat(stop.lat);
+    setLon(stop.lon);
   }, [stop.lat]);
 
   // popup tooltip
@@ -77,7 +81,8 @@ const Map = ({ link, style_height, line }) => {
       setShowPopup(true);
       setLat(features[0].geometry.coordinates[1]);
       setLon(features[0].geometry.coordinates[0]);
-      setProperty(features[0].properties.qty);
+      setProperty(features[0].properties.stopName);
+      // console.log(features[0].properties);
       // console.log(features[0].properties.qty);
       // setStopID(features[0].properties.stopID);
       console.log(property);
@@ -282,6 +287,14 @@ const Map = ({ link, style_height, line }) => {
             }}
           />
         </Source>
+
+        <Marker latitude={lat} longitude={lon} offsetLeft={-20} offsetTop={-10}>
+          <div style={{ color: "orange", fontWeight: "bold" }}>
+            You are here
+          </div>
+
+          <Icon style={{ color: orange[500] }}>train</Icon>
+        </Marker>
         <div style={fullscreenControlStyle}>
           <FullscreenControl />
         </div>

@@ -4,7 +4,7 @@ import socketIOClient from "socket.io-client";
 
 const mapStyle = {
   position: "absolute",
-  top: 0,
+  top: 50,
   right: 0,
   left: 0,
   bottom: 0
