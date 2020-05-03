@@ -6,7 +6,7 @@ import OriginDes from "../component/OriginDes";
 
 import Grid from "@material-ui/core/Grid";
 
-const RouteTranslink = () => {
+const Hexagon = () => {
   return (
     <div>
       <Grid container spacing={1}>
@@ -33,4 +33,4 @@ const RouteTranslink = () => {
   );
 };
 
-export default RouteTranslink;
+export default Hexagon;

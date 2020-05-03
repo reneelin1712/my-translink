@@ -64,7 +64,7 @@ const Nav = () => {
               label="3D hexagon"
               className={classes.tab}
               component={Link}
-              to="/route"
+              to="/hexagon"
             ></Tab>
             <Tab
               label="origin-des"
@@ -99,6 +99,12 @@ const Nav = () => {
               className={classes.tab}
               component={Link}
               to="/threed"
+            ></Tab>
+            <Tab
+              label="Uber Drive"
+              className={classes.tab}
+              component={Link}
+              to="/selfdriving"
             ></Tab>
           </Tabs>
         </Toolbar>

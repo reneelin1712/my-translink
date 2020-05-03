@@ -160,6 +160,7 @@ class ThreeD extends React.Component {
     map.on("style.load", function() {
       map.addLayer(customLayer, "waterway-label");
     });
+    map.addControl(new mapboxgl.NavigationControl());
   }
 
   render() {

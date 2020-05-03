@@ -82,16 +82,22 @@ const colorRange = [
 const DeckMap = () => {
   const [stop, setStop] = useContext(StopContext);
   const [viewport, setViewport] = useState({
-    longitude: 152.706069,
-    latitude: -27.565841,
-    zoom: 8,
+    longitude: 153.006069,
+    latitude: -27.465841,
+    zoom: 9,
     bearing: 0,
-    pitch: 40.5
+    pitch: 45
   });
 
   const _onViewportChange = viewport => {
     setViewport(viewport);
   };
+
+  useEffect(() => {
+    setViewport({ ...viewport, latitude: stop.lat, longitude: stop.lon });
+    // setLat(stop.lat);
+    // setLon(stop.lon);
+  }, [stop.lat]);
 
   return (
     <MapGL

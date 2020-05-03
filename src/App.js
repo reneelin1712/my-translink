@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Nav from "./component/Nav";
 import Station from "./pages/Station";
 import Overall from "./pages/Overall";
-import RouteTranslink from "./pages/RouteTranslink";
+import Hexagon from "./pages/Hexagon";
 import ThreeD from "./pages/ThreeD";
 import Realtime from "./pages/Realtime";
 import OrigDes from "./pages/OrigDes";
+import SelfDrivingCar from "./pages/SelfDrivingCar";
 
 export default function App() {
   return (
@@ -24,8 +25,8 @@ export default function App() {
             <Overall />
           </Route>
 
-          <Route path="/route">
-            <RouteTranslink />
+          <Route path="/hexagon">
+            <Hexagon />
           </Route>
 
           <Route path="/origdes">
@@ -40,8 +41,12 @@ export default function App() {
             <ThreeD />
           </Route>
 
+          <Route path="/selfdriving">
+            <SelfDrivingCar />
+          </Route>
+
           <Route path="/">
-            <Home />
+            <Station />
           </Route>
         </Switch>
       </div>
@@ -55,14 +60,6 @@ function Home() {
       <h2>Home</h2>
     </div>
   );
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }
 
 // import React from "react";
