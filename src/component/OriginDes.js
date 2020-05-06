@@ -56,9 +56,9 @@ const OriginDes = () => {
         viewState={viewport}
         layers={[
           new ArcLayer({
-            data: temp,
+            data: trips,
             strokeWidth: 4,
-            getWidth: d => d.qty / 100,
+            getWidth: d => d.qty / 500,
             getSourcePosition: d => d.org,
             getTargetPosition: d => d.des,
             getSourceColor: x => [0, 0, 255],

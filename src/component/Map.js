@@ -31,9 +31,12 @@ const REACT_APP_MAPBOX_TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA";
 
 const links = {
-  2017: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2017cut.json",
-  2018: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2018cut.json",
-  2019: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019cut.json"
+  // 2017: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2017cut.json",
+  // 2018: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2018cut.json",
+  // 2019: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019cut.json"
+  2017: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2017.json",
+  2018: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2018.json",
+  2019: "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/geoJson2019.json"
 };
 const Map = ({ link, style_height, line }) => {
   const [qtyValue, setQtyValue] = useState([0, 30]);

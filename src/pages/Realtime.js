@@ -30,7 +30,8 @@ class Realtime extends React.Component {
       lng: 36.19583044471166,
       lat: 44.17716381518971,
       zoom: 13,
-      endpoint: "http://localhost:4000"
+      // endpoint: "http://localhost:4000"
+      endpoint: "http://146.148.69.40:4000"
     };
   }
 
@@ -45,7 +46,7 @@ class Realtime extends React.Component {
     var map = (window.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/mapbox/streets-v11",
-      zoom: 13,
+      zoom: 12,
       center: [this.state.lng, this.state.lat],
       pitch: 60,
       antialias: true // create the gl context with MSAA antialiasing, so custom layers are antialiased

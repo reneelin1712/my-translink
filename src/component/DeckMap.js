@@ -7,9 +7,7 @@ import MapGL, {
   ScaleControl,
   Marker
 } from "react-map-gl";
-import { testfile } from "./test";
 import { json201912 } from "./deckData";
-import { try11 } from "./test";
 import Icon from "@material-ui/core/Icon";
 import { orange } from "@material-ui/core/colors";
 import { StopContext } from "../context/StopProvider";
