@@ -7,15 +7,16 @@ import MapGL, {
   ScaleControl,
   Marker
 } from "react-map-gl";
-import { json201912 } from "./deckData";
+// import { json201912 } from "./deckData";
 import Icon from "@material-ui/core/Icon";
 import { orange } from "@material-ui/core/colors";
 import { StopContext } from "../context/StopProvider";
+import { DataContext } from "../context/DataProvider";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
 
-const sourceData = json201912;
+// const sourceData = json201912;
 // "https://storage.googleapis.com/geojson_translink/geoJson201912.json";
 
 const fullscreenControlStyle = {
@@ -80,6 +81,7 @@ const colorRange = [
 ];
 
 const DeckMap = () => {
+  const [data, setData] = useContext(DataContext);
   const [stop, setStop] = useContext(StopContext);
   const [viewport, setViewport] = useState({
     longitude: 153.006069,
@@ -168,7 +170,8 @@ const DeckMap = () => {
           new HexagonLayer({
             data:
               //try11,
-              sourceData,
+              // sourceData,
+              data.hexagonData,
             getPosition: d => [d.lon, d.lat],
             // strokeWidth: 4,
             //getElevationWeight: d => d.n_killed * 2 + d.n_injured,

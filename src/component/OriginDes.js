@@ -6,7 +6,7 @@ import MapGL, {
   FullscreenControl,
   ScaleControl
 } from "react-map-gl";
-import { trips03 } from "./tripData";
+// import { trips03 } from "./tripData";
 import { trips01 } from "./tripData01";
 import Icon from "@material-ui/core/Icon";
 import { orange } from "@material-ui/core/colors";
@@ -16,6 +16,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+
+import { DataContext } from "../context/DataProvider";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
@@ -49,12 +51,8 @@ const radioStyle = {
   right: 10
 };
 
-const timeIntervals = {
-  morning: trips01,
-  afternoon: trips03
-};
-
 const OriginDes = () => {
+  const [data, setData] = useContext(DataContext);
   const [value, setValue] = React.useState("morning");
   const [timeInterval, setTimeInterval] = useState(trips01);
   const [viewport, setViewport] = useState({
@@ -62,7 +60,7 @@ const OriginDes = () => {
     // height: 400,
     longitude: 153.019079,
     latitude: -27.467834,
-    zoom: 9,
+    zoom: 8,
     bearing: 0,
     pitch: 30
     // transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
@@ -107,6 +105,11 @@ const OriginDes = () => {
         </div>
       )
     );
+  };
+
+  const timeIntervals = {
+    morning: data.trips01,
+    afternoon: data.trips03
   };
 
   const handleChangeTime = event => {
