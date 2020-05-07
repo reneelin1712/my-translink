@@ -24,7 +24,7 @@ const darkTheme = createMuiTheme({
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/v1/graphql"
-  // uri: "http://34.70.125.163:8080/v1/graphql"
+  //uri: "http://34.70.125.163:8080/v1/graphql"
 });
 
 ReactDOM.render(

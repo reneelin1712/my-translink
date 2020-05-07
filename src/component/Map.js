@@ -85,7 +85,7 @@ const Map = ({ link, style_height, line }) => {
       setLat(features[0].geometry.coordinates[1]);
       setLon(features[0].geometry.coordinates[0]);
       setProperty(features[0].properties.stopName);
-      // console.log(features[0].properties);
+      console.log(features[0].properties);
       // console.log(features[0].properties.qty);
       // setStopID(features[0].properties.stopID);
       console.log(property);

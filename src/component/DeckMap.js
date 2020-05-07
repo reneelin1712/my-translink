@@ -186,13 +186,22 @@ const DeckMap = () => {
                   pointerX: info.x,
                   pointerY: info.y
                 });
+              } else {
+                setTooltipInfo({
+                  stopQty: null
+                });
               }
             },
             pickable: true,
             opacity: 0.6,
             coverage: 0.88,
             material,
-            colorRange
+            colorRange,
+            upperPercentile: 100
+            // elevationRange: [0, 3000],
+            // transitions: {
+            //   elevationScale: 3000
+            // }
             // lowerPercentile: 50
             // getSourceColor: x => [0, 0, 255],
             // getTargetColor: x => [0, 255, 0]
