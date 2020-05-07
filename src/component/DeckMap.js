@@ -14,21 +14,9 @@ import { StopContext } from "../context/StopProvider";
 
 const TOKEN =
   "pk.eyJ1IjoicmVuZWVsaW4iLCJhIjoiY2s2bGdsM294MGFyNDNkcGZxdjRiamVtZCJ9.NXBRh4xFGeNFfqikqH97bA"; // Set your mapbox token here
-const ambientLight = new AmbientLight({
-  color: [255, 255, 255],
-  intensity: 1.0
-});
 
 const sourceData = json201912;
 // "https://storage.googleapis.com/geojson_translink/geoJson201912.json";
-
-const toggleButton = {
-  position: "absolute",
-  top: 10,
-  // left: 0,
-  right: 10,
-  zIndex: 9999
-};
 
 const fullscreenControlStyle = {
   position: "absolute",
@@ -53,16 +41,21 @@ const scaleControlStyle = {
   padding: "10px"
 };
 
+const ambientLight = new AmbientLight({
+  color: [255, 255, 255],
+  intensity: 1.0
+});
+
 const pointLight1 = new PointLight({
   color: [255, 255, 255],
   intensity: 0.8,
-  position: [-0.144528, 49.739968, 80000]
+  position: [152.026069, -26.465841, 80000]
 });
 
 const pointLight2 = new PointLight({
   color: [255, 255, 255],
   intensity: 0.8,
-  position: [-3.807751, 54.104682, 8000]
+  position: [153.026069, -28.465841, 80000]
 });
 
 const lightingEffect = new LightingEffect({
@@ -73,7 +66,7 @@ const lightingEffect = new LightingEffect({
 const material = {
   ambient: 0.64,
   diffuse: 0.6,
-  shininess: 32,
+  shininess: 52,
   specularColor: [51, 51, 51]
 };
 
@@ -87,14 +80,13 @@ const colorRange = [
 ];
 
 const DeckMap = () => {
-  const [disableHover, setDisableHover] = useState(true);
   const [stop, setStop] = useContext(StopContext);
   const [viewport, setViewport] = useState({
     longitude: 153.006069,
     latitude: -27.465841,
-    zoom: 9,
-    bearing: 0,
+    zoom: 8,
     pitch: 45
+    // bearing: -27.396674584323023
   });
 
   const [tooltipInfo, setTooltipInfo] = useState({
@@ -172,8 +164,6 @@ const DeckMap = () => {
         controller={true}
         viewState={viewport}
         effects={[lightingEffect]}
-        colorRange={colorRange}
-        material={material}
         layers={[
           new HexagonLayer({
             data:
@@ -198,32 +188,11 @@ const DeckMap = () => {
                 });
               }
             },
-            // onHover:
-            //   // disableHover
-            //   //   ? null
-            //   //   :
-            //   ({ object, x, y }) => {
-            //     const el = document.getElementById("tooltip");
-            //     const width = window.innerWidth * 0.33;
-            //     if (object) {
-            //       const { points } = object;
-            //       console.log(points[0]);
-            //       el.innerHTML = `<div><h5>Name ${
-            //         points[0].stopName
-            //       }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
-            //       el.style.display = "block";
-            //       el.style.opacity = 0.9;
-            //       el.style.left = x + width + "px";
-            //       el.style.top = y + "px";
-            //     } else {
-            //       el.style.opacity = 0.0;
-            //     }
-            //     // console.log(object);
-            //   },
             pickable: true,
             opacity: 0.6,
-            coverage: 0.88
-            // colorRange   update this once know light
+            coverage: 0.88,
+            material,
+            colorRange
             // lowerPercentile: 50
             // getSourceColor: x => [0, 0, 255],
             // getTargetColor: x => [0, 255, 0]
