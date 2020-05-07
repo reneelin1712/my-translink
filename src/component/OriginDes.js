@@ -23,6 +23,11 @@ const OriginDes = () => {
   });
 
   const [stop, setStop] = useContext(StopContext);
+  const [tooltipInfo, setTooltipInfo] = useState({
+    stopQty: null,
+    pointerX: null,
+    pointerY: null
+  });
 
   const _onViewportChange = viewport => {
     setViewport(viewport);
@@ -33,6 +38,25 @@ const OriginDes = () => {
     // setLat(stop.lat);
     // setLon(stop.lon);
   }, [stop.lat]);
+
+  const _renderTooltip = () => {
+    const { stopQty, pointerX, pointerY } = tooltipInfo || {};
+    return (
+      stopQty && (
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            pointerEvents: "none",
+            left: pointerX,
+            top: pointerY
+          }}
+        >
+          {stopQty}
+        </div>
+      )
+    );
+  };
 
   return (
     <MapGL
@@ -62,10 +86,23 @@ const OriginDes = () => {
             getSourcePosition: d => d.org,
             getTargetPosition: d => d.des,
             getSourceColor: x => [0, 0, 255],
-            getTargetColor: x => [0, 255, 0]
+            getTargetColor: x => [0, 255, 0],
+            pickable: true,
+            onHover: info => {
+              console.log(info);
+              if (info.object) {
+                setTooltipInfo({
+                  stopQty: info.object.qty,
+                  pointerX: info.x,
+                  pointerY: info.y
+                });
+              }
+            }
           })
         ]}
-      />
+      >
+        {_renderTooltip()}
+      </DeckGL>
     </MapGL>
   );
 };

@@ -22,11 +22,20 @@ const ambientLight = new AmbientLight({
 const sourceData = json201912;
 // "https://storage.googleapis.com/geojson_translink/geoJson201912.json";
 
+const toggleButton = {
+  position: "absolute",
+  top: 10,
+  // left: 0,
+  right: 10,
+  zIndex: 9999
+};
+
 const fullscreenControlStyle = {
   position: "absolute",
   top: 0,
   left: 0,
-  padding: "10px"
+  padding: "10px",
+  zIndex: 9999
 };
 
 const navStyle = {
@@ -78,6 +87,7 @@ const colorRange = [
 ];
 
 const DeckMap = () => {
+  const [disableHover, setDisableHover] = useState(true);
   const [stop, setStop] = useContext(StopContext);
   const [viewport, setViewport] = useState({
     longitude: 153.006069,
@@ -85,6 +95,13 @@ const DeckMap = () => {
     zoom: 9,
     bearing: 0,
     pitch: 45
+  });
+
+  const [tooltipInfo, setTooltipInfo] = useState({
+    stopName: null,
+    stopQty: null,
+    pointerX: null,
+    pointerY: null
   });
 
   const _onViewportChange = viewport => {
@@ -96,6 +113,25 @@ const DeckMap = () => {
     // setLat(stop.lat);
     // setLon(stop.lon);
   }, [stop.lat]);
+
+  const _renderTooltip = () => {
+    const { stopName, stopQty, pointerX, pointerY } = tooltipInfo;
+    return (
+      stopName && (
+        <div
+          style={{
+            position: "absolute",
+            pointerEvents: "none",
+            left: pointerX,
+            top: pointerY
+          }}
+        >
+          {stopName}
+          <div>Inbound Qty: {stopQty * 100}</div>
+        </div>
+      )
+    );
+  };
 
   return (
     <MapGL
@@ -150,24 +186,40 @@ const DeckMap = () => {
             elevationScale: 50,
             radius: 100,
             extruded: true,
-            onHover: ({ object, x, y }) => {
-              // const el = document.getElementById("tooltip");
-              if (object) {
-                const { points } = object;
-                // console.log(points[0]);
-                //   el.innerHTML = `<div><h5>Name ${
-                //     points[0].stopName
-                //   }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
-                //   el.style.display = "block";
-                //   el.style.opacity = 0.9;
-                //   el.style.left = x + "px";
-                //   el.style.top = y + "px";
-                // } else {
-                //   el.style.opacity = 0.0;
+            onHover: info => {
+              // console.log(info);
+              if (info.object) {
+                console.log(info.object);
+                setTooltipInfo({
+                  stopName: info.object.points[0].stopName,
+                  stopQty: info.object.points[0].qty,
+                  pointerX: info.x,
+                  pointerY: info.y
+                });
               }
-
-              // console.log(object);
             },
+            // onHover:
+            //   // disableHover
+            //   //   ? null
+            //   //   :
+            //   ({ object, x, y }) => {
+            //     const el = document.getElementById("tooltip");
+            //     const width = window.innerWidth * 0.33;
+            //     if (object) {
+            //       const { points } = object;
+            //       console.log(points[0]);
+            //       el.innerHTML = `<div><h5>Name ${
+            //         points[0].stopName
+            //       }</h5><h5>Qty ${points[0].qty * 100}</h5></div>`;
+            //       el.style.display = "block";
+            //       el.style.opacity = 0.9;
+            //       el.style.left = x + width + "px";
+            //       el.style.top = y + "px";
+            //     } else {
+            //       el.style.opacity = 0.0;
+            //     }
+            //     // console.log(object);
+            //   },
             pickable: true,
             opacity: 0.6,
             coverage: 0.88
@@ -177,7 +229,9 @@ const DeckMap = () => {
             // getTargetColor: x => [0, 255, 0]
           })
         ]}
-      />
+      >
+        {_renderTooltip()}
+      </DeckGL>
     </MapGL>
   );
 };
