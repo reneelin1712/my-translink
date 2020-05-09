@@ -106,6 +106,13 @@ const Nav = () => {
               component={Link}
               to="/selfdriving"
             ></Tab>
+
+            <Tab
+              label="monitor"
+              className={classes.tab}
+              component={Link}
+              to="/monitor"
+            ></Tab>
           </Tabs>
         </Toolbar>
       </AppBar>

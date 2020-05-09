@@ -8,6 +8,7 @@ import ThreeD from "./pages/ThreeD";
 import Realtime from "./pages/Realtime";
 import OrigDes from "./pages/OrigDes";
 import SelfDrivingCar from "./pages/SelfDrivingCar";
+import Monitor from "./pages/Monitor";
 
 export default function App() {
   return (
@@ -43,6 +44,10 @@ export default function App() {
 
           <Route path="/selfdriving">
             <SelfDrivingCar />
+          </Route>
+
+          <Route path="/monitor">
+            <Monitor />
           </Route>
 
           <Route path="/">
