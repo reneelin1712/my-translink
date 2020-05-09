@@ -17,6 +17,16 @@ const STOP_INBOUND_QTY_2019 = gql`
   }
 `;
 
+const STOP_INBOUND_QTY_2019_MONTH = gql`
+  query stops_inbound_qty_2019_month($stopID: String) {
+    stops_inbound_qty_2019_month(where: { origin_stop: { _eq: $stopID } }) {
+      origin_stop
+      month
+      sum
+    }
+  }
+`;
+
 const LineChart = () => {
   const [stop, setStop] = useContext(StopContext);
   console.log(stop.stopID);
@@ -24,20 +34,21 @@ const LineChart = () => {
   const [yAxis, setYAxis] = useState([]);
   const [xAxis, setXAxis] = useState([]);
   // const [last, setLast] = useState([]);
-  const [forecast, setForecast] = useState([13317, 18000, 19000, 20000]);
+  // const [forecast, setForecast] = useState([13317, 18000, 19000, 20000]);
+  const [forecast, setForecast] = useState([]);
 
-  const { loading, error } = useQuery(STOP_INBOUND_QTY_2019, {
+  const { loading, error } = useQuery(STOP_INBOUND_QTY_2019_MONTH, {
     variables: { stopID: stop.stopID },
     onCompleted: data => {
       console.log(data);
-      const tempX = data.stops_inbound_qty_2019.map(row => row.month);
+      const tempX = data.stops_inbound_qty_2019_month.map(row => row.month);
       const unique = [...new Set(tempX)];
       const forecast3month = [...unique, "2020-01", "2020-02", "2020-03"];
       console.log(forecast3month);
       setXAxis(forecast3month);
 
-      const tempY = data.stops_inbound_qty_2019
-        .filter(row => row.time == "Weekday (12:00am-8:29:59am)")
+      const tempY = data.stops_inbound_qty_2019_month
+        // .filter(row => row.time == "Weekday (12:00am-8:29:59am)")
         .map(row => row.sum);
       console.log(tempY);
       const forecast3 = [...tempY];
@@ -57,8 +68,8 @@ const LineChart = () => {
     };
 
     fetch(
-      //"https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/forecast",
-      "http://127.0.0.1:5000/api/forecast",
+      "https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/forecast",
+      //"http://127.0.0.1:5000/api/forecast",
       requestOptions
     )
       .then(res => res.json())
@@ -66,12 +77,13 @@ const LineChart = () => {
         console.log(data.forecast_central);
         const concatForcast = [...yAxis, data.forecast_central];
         console.log(concatForcast);
-        setForecast([15024, 17912, 14311, 16817, 17311, 19559]);
+        // setForecast([15024, 17912, 14311, 16817, 17311, 19559]);
+        setForecast(data.forecast_central);
       });
 
     fetch(
-      //"https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/time"
-      "http://127.0.0.1:5000/api/time"
+      "https://cors-anywhere.herokuapp.com/http://35.194.55.164:5000/api/time"
+      //"http://127.0.0.1:5000/api/time"
     )
       .then(res => res.json())
       .then(data => console.log(data));
