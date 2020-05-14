@@ -95,10 +95,10 @@ const Nav = () => {
               to="/overall"
             ></Tab>
             <Tab
-              label="3D"
+              label="UQ"
               className={classes.tab}
               component={Link}
-              to="/threed"
+              to="/uq"
             ></Tab>
             <Tab
               label="Uber Drive"

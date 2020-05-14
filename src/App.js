@@ -4,7 +4,7 @@ import Nav from "./component/Nav";
 import Station from "./pages/Station";
 import Overall from "./pages/Overall";
 import Hexagon from "./pages/Hexagon";
-import ThreeD from "./pages/ThreeD";
+import UQ from "./pages/UQ";
 import Realtime from "./pages/Realtime";
 import OrigDes from "./pages/OrigDes";
 import SelfDrivingCar from "./pages/SelfDrivingCar";
@@ -38,8 +38,8 @@ export default function App() {
             <Realtime />
           </Route>
 
-          <Route path="/threed">
-            <ThreeD />
+          <Route path="/uq">
+            <UQ />
           </Route>
 
           <Route path="/selfdriving">
