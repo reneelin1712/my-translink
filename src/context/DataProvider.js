@@ -6,7 +6,9 @@ export const DataProvider = props => {
   const [deckData, setDeckData] = useState({
     hexagonData: null,
     trips01: null,
-    trips03: null
+    trips03: null,
+    trpis2uq08: null,
+    trips2uq12: null
   });
 
   useEffect(() => {
@@ -45,10 +47,20 @@ export const DataProvider = props => {
       "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/hexagonData.js"
     );
 
+    const uq1 = fetch(
+      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/trips2uq201908am.json"
+    );
+
+    const uq2 = fetch(
+      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/trips2uq201912am.json"
+    );
+
     const urls = [
       "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/tripData1.js",
       "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/tripData3.js",
-      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/hexagonData.js"
+      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/hexagonData.js",
+      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/trips2uq201908am.json",
+      "https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/geojson_translink/deckgldata/trips2uq201912am.json"
     ];
 
     Promise.all(urls.map(url => fetch(url).then(res => res.json())))
@@ -60,7 +72,9 @@ export const DataProvider = props => {
             ...deckData,
             trips01: data[0],
             trips03: data[1],
-            hexagonData: data[2]
+            hexagonData: data[2],
+            trips2uq08: data[3],
+            trips2uq12: data[4]
           });
         }
       )

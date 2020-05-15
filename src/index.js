@@ -10,6 +10,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 
 import { StopProvider } from "./context/StopProvider";
 import { DataProvider } from "./context/DataProvider";
+import { SelectionProvider } from "./context/SelectionProvider";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -31,12 +32,14 @@ const client = new ApolloClient({
 ReactDOM.render(
   <StopProvider>
     <DataProvider>
-      <ThemeProvider theme={darkTheme}>
-        <ApolloProvider client={client}>
-          <CssBaseline />
-          <App />
-        </ApolloProvider>
-      </ThemeProvider>
+      <SelectionProvider>
+        <ThemeProvider theme={darkTheme}>
+          <ApolloProvider client={client}>
+            <CssBaseline />
+            <App />
+          </ApolloProvider>
+        </ThemeProvider>
+      </SelectionProvider>
     </DataProvider>
   </StopProvider>,
   document.getElementById("root")
