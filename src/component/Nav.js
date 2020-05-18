@@ -81,25 +81,13 @@ const Nav = () => {
                 </Typography>
               </Link> */}
             </Tab>
-
-            <Tab
-              label="real-time"
-              className={classes.tab}
-              component={Link}
-              to="/realtime"
-            ></Tab>
-            <Tab
-              label="overall"
-              className={classes.tab}
-              component={Link}
-              to="/overall"
-            ></Tab>
             <Tab
               label="UQ"
               className={classes.tab}
               component={Link}
               to="/uq"
             ></Tab>
+
             <Tab
               label="Uber Drive"
               className={classes.tab}
@@ -112,6 +100,18 @@ const Nav = () => {
               className={classes.tab}
               component={Link}
               to="/monitor"
+            ></Tab>
+            <Tab
+              label="real-time"
+              className={classes.tab}
+              component={Link}
+              to="/realtime"
+            ></Tab>
+            <Tab
+              label="overall"
+              className={classes.tab}
+              component={Link}
+              to="/overall"
             ></Tab>
           </Tabs>
         </Toolbar>
