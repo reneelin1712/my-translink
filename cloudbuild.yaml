@@ -1,9 +1,9 @@
 steps:
-  - name: "gcr.io/cloud-builders/npm"
+  - name: "gcr.io/cloud-builders/yarn"
     args: ["install"]
 
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "build"]
+  - name: "gcr.io/cloud-builders/yarn"
+    args: ["GENERATE_SOURCEMAP=false", "build"]
 
   - name: "gcr.io/mytranslink2020/firebase"
     args: ["deploy"]
