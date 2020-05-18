@@ -321,9 +321,9 @@ const UQ = () => {
                   alignItems: "center"
                 }}
               >
-                <Brightness1Icon style={{ color: "#00FF00" }}></Brightness1Icon>
-                <p>Origin_</p>
                 <Brightness1Icon style={{ color: "#0000FF" }}></Brightness1Icon>
+                <p>Origin_</p>
+                <Brightness1Icon style={{ color: "#00FF00" }}></Brightness1Icon>
                 <p>Destination</p>
               </div>
             </FormControl>
