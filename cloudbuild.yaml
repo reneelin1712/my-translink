@@ -6,4 +6,4 @@ steps:
     args: ["run", "build"]
 
   - name: "gcr.io/mytranslink2020/firebase"
-    args: ["install"]
+    args: ["deploy"]
