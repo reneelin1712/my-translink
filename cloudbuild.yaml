@@ -3,7 +3,7 @@ steps:
     args: ["install"]
 
   - name: "gcr.io/cloud-builders/yarn"
-    args: ["GENERATE_SOURCEMAP=false", "build"]
+    args: ["build"]
 
   - name: "gcr.io/mytranslink2020/firebase"
     args: ["deploy"]
