@@ -30,8 +30,8 @@ class Realtime extends React.Component {
       // lng: 36.19583044471166,
       // lat: 44.17716381518971,
       zoom: 13,
-      endpoint: "http://localhost:4000"
-      //endpoint: "http://146.148.69.40:4000"
+      //endpoint: "http://localhost:4000"
+      endpoint: "http://146.148.69.40:4000"
     };
   }
 
